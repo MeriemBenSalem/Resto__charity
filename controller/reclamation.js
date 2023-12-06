@@ -1,12 +1,10 @@
 const Reclamation=require("../model/reclamation"); 
 //**add */
-async function add(x){
+async function add(req,res,next){
     try{
-      const reclamation = new Reclamation({
-        message:x,
-        date:new Date()
-      });
+      const reclamation = new Reclamation(req.body);
         await reclamation.save();
+        res.status(200).send("add succee")
     }catch(err){
         console.log (err);
     }

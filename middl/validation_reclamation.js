@@ -4,9 +4,10 @@ const validate =async(req,res,next)=>{
     try{
         
         const Schema=yup.object().shape({
-            name:yup.string().required(),
-            email:yup.string().email().required(),
-            nbrReclamation:yup.string().number().required()
+            reclamation:yup.string().required(),
+            date:yup.date().required()
+          
+
         })
         await Schema.validate(req.body);
         next();

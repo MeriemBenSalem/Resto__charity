@@ -13,7 +13,6 @@
     <input type="submit" onclick="send()">
 <script>
     const socket = io.connect();
-    //***name :contien nom de user 
     nom = prompt("Donner nom de user ")
 
     socket.on("typing",(data)=>{
@@ -27,18 +26,15 @@
         p.innerText=data
         document.body.appendChild(p)
     })
-//x :contien le msg envoyer 
+
     x=document.getElementById("ch")
-//fct onkeyup="typing()
     function typing(){
     socket.emit("typing",nom)
 
     }
 
-    //send contien 
     function send(){
         console.log("message : "+x.value)
-        //object:x.value =>msg ds input --name:name=>msg nom user
         socket.emit("msg",{objet:x.value,name:nom})
     }
 </script>

@@ -15,6 +15,7 @@ mongo.connect(mongoconnect.url,{
   .catch((err)=>console.log(err));
 
 const reclamationrouter = require ("./routes/reclamation");
+const clientrouter = require ("./routes/client");
 var app = express();
 app.set("views",path.join(__dirname,"views"));
 app.set("view engine","twig");
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use("/reclamation", reclamationrouter);
+app.use("/client", clientrouter);
 const server = http.createServer(app);
 const io=require("socket.io")(server);
 
