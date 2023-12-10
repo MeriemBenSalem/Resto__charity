@@ -4,8 +4,12 @@ const mongo = require ("mongoose");
 const mongoconnect = require("./config/dbconnection.json");
 const bodyParser=require("body-parser");
 const path=require("path");
+
+
 //importaion de fonction
 const {add}=require("./controller/client");
+const {add}=require("./controller/beneficiaryController")
+const {add}=require("./controller/donationController")
 
 mongo.connect(mongoconnect.url,{
     useNewUrlParser:true,
@@ -14,8 +18,11 @@ mongo.connect(mongoconnect.url,{
   .then(()=>console.log('mongo connecter'))
   .catch((err)=>console.log(err));
 
-const reclamationrouter = require ("./routes/reclamation");
-const clientrouter = require ("./routes/client");
+const beneficiaryRoutes=require("./routes/beneficiaryRoutes")
+const donationRoutes=require("./routes/donationRoutes")
+
+//const reclamationrouter = require ("./routes/reclamation");
+//const clientrouter = require ("./routes/client");
 var app = express();
 app.set("views",path.join(__dirname,"views"));
 app.set("view engine","twig");
@@ -23,9 +30,10 @@ app.set("view engine","twig");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-
-app.use("/reclamation", reclamationrouter);
-app.use("/client", clientrouter);
+app.use("/beneficiaries", beneficiaryRoutes)
+app.use("/donation",donationRoutes)
+//app.use("/reclamation", reclamationrouter);
+//app.use("/client", clientrouter);
 const server = http.createServer(app);
 const io=require("socket.io")(server);
 
