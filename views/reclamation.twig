@@ -1,0 +1,62 @@
+<html>
+<head>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    
+
+<center><label for="">Reclamation:</label>
+<input id="nom" type="text"><br>
+<label for="">Nom client:</label>
+<input id="id1" type="text"><br>
+<label for="">ID Client :</label>
+<input id="rec" type="text"><br>
+<input onclick="envoye()" type="submit">
+<button onclick="affiche()" >Afficher Reclamation</button></center>
+
+<script>
+
+
+const socket=io.connect();
+
+
+socket.on("reclamation",(data)=>{
+
+    s=document.createElement("p")
+    s.innerHTML=("<center>"+"nom"+":"+data.nom+"<br>"+"Id"+":"+data.id1+"<br>"
+    +"reclamation"+":"+data.rec+ "</center>")
+    document.body.appendChild(s)
+   
+})
+       
+socket.on("aff",(data)=>{
+console.log("aff"+JSON.stringify(data))
+s=document.createElement("p")
+s.innerHTML=("<center>"+"nom"+":"+nom.value+"<br>"+"Reclamation:"+data.reclamation+"<br>"+"date :"+
+data.date+"<br></center>")
+document.body.appendChild(s)
+
+})
+
+function envoye(){
+    reclamation={
+        nom :nom.value,
+        id1:id1.value,
+        rec:rec.value
+    }
+
+    socket.emit("reclamation",reclamation)
+
+}
+
+function affiche(){
+    reclamation={
+        id1:id1.value,
+        rec:rec.value
+    }
+    console.log("reclamation"+JSON.stringify(reclamation))
+    socket.emit("aff",reclamation)
+}
+</script>
+</body>
+</html>
